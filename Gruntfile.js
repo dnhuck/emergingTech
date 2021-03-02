@@ -1,20 +1,43 @@
-module.export = function(grunt){
+const sass = require('node-sass');
 
-    // config
+module.exports = function(grunt){
+    
+
     grunt.initConfig({
-        // pass in options to plugins, references to files
+        concat: {
+            js: {
+                src: ['js/*.js'],
+                dest: 'build/script.js'
+            },
+            css: {
+                src: ['css/*.css'],
+                dest: 'build/styles.css'
+            }
+        },
+
+        sass: {
+            options: {
+                implementation: sass,
+                sourceMap: true
+            },
+
+            dist:{
+                files: {
+                    'css/styles.css': 'sass/style.scss'
+                }
+            }
+        }    
+
     });
 
-    // load plugins
-    //grunt.loadNpmTasks('');
+     // load plugins
+    grunt.loadNpmTasks('grunt-contrib-concat');
+    grunt.loadNpmTasks('grunt-sass');
 
     // register tasks
-    grunt.registerTask("run", function(){
-        console.log('running');
-    });
+    grunt.registerTask('concat-js' ['concat:js'])
+    grunt.registerTask('concat-css' ['concat:css'])
+    grunt.registerTask('default', ['sass']);
 
-    grunt.registerTask('sleep', function(){
-        console.log('sleeping');
-    });
-    
+
 }
